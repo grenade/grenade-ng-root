@@ -1,23 +1,39 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
+<div class="jumbotron" ng-show="show.jumbotron" ng-click="show.jumbotron=!show.jumbotron">
   <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
+    <img src="images/gitninja360.png" alt="I'm GitNinja">
   </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+  <h1>Yo!</h1>
 </div>
-
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
+<div ng-hide="show.jumbotron" ng-click="show.jumbotron=!show.jumbotron" class="clearfix  text-center">
+  <img src="images/gitninja360.png" alt="I'm GitNinja" style="width: 36px; height: 36px;" />
+</div>
+<div class="row marketing text-center">
   <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
+    I'm Rob.
   </p>
-
-  <h4>Angular</h4>
   <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
+    I have a <a href="/cv">CV</a> here but I mostly do online stuff elsewhere.
   </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+  <ul class="list-inline">
+    <li>
+      <a href="https://plus.google.com/+RobThijssen/photos">
+        <img ng-src="images/plus.png" />
+      </a>
+    </li>
+    <li>
+      <a href="https://twitter.com/grenade">
+        <img ng-src="images/twitter.png" />
+      </a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/in/thijssen">
+        <img ng-src="images/in.png" />
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/grenade">
+        <img ng-src="images/github.png" />
+      </a>
+    </li>
+  </ul>
 </div>
