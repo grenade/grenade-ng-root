@@ -1,9 +1,7 @@
 #!/bin/bash
 
 git clone "https://${GH_TOKEN}@${GH_REF}" pages_repo
-cd pages_repo
-rm -rf !(.|..|.git|images|bugzoolla|cv)
-cd ..
+rm -rf pages_repo/!(.|..|.git|images|bugzoolla|cv)
 cp -r dist pages_repo
 git --git-dir=./pages_repo/.git --work-tree=./pages_repo config user.name "${GIT_NAME}"
 git --git-dir=./pages_repo/.git --work-tree=./pages_repo config user.email "${GIT_EMAIL}"
