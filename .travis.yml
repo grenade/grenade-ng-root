@@ -1,9 +1,19 @@
 sudo: false
 language: node_js
+before_install:
+- gem install sass compass
 node_js:
-  - 'iojs'
-  - '0.12'
-  - '0.10'
+- iojs
 before_script:
-  - 'npm install -g bower grunt-cli'
-  - 'bower install'
+- npm install -g bower grunt-cli
+- bower install
+script:
+- grunt build
+- bash ./publish.sh
+env:
+  global:
+  - GIT_NAME: Travis-CI
+  - GIT_EMAIL: support@travis-ci.org
+  - GH_REF: github.com/grenade/grenade.github.io.git
+  - GH_PAGES_BRANCH: master
+  - secure: CUo4i4d0aqj2DeIjanNX0NW5i1gXl6qO9n50jmay6lcR+ACD6UNU5HZ3SwAT9lHqKgWX00ptOMXvXd3HVn1S8jruUAp5Cg/CDNa8Qt5TOduV1ZUKPW9HMVjog9jX6yysvWItM6AyEG9UsLJB4Lc3BGJRquqOIsnOi45BDm1NFAROwJR0kPOtJ1OOerRedAhfBt0fB0UwmXoSF2fXuQXMMWOIsX7/JF24BeamIyV5tvgNsb6F2Wy5ocD/f/XSxdhmQsvmUZwq+jX866WMv/sjWXXLTbqM7ztkGa/lhgO+ViDZrmBJb9uS+jpvBUkarYmFxF4B7Gluebt2PErPqV+wblxGNXJOUzziQYLmFxg1jT/4BTk4Q/R3TYMy+FPPK2FzMH22MEsAf6UUn8InLmuR1r5bXV/C9rsetPKT7xXzZU53Qua0OSP7mza7BaFTNpmV0VSJD2X32iHc/uiDbgLJ/yZQj3smS7ATm21dKXoYUlFNNYQGGswOGvfBnl4k19C61KoqGhLXtNhV0cMQ1lrIq5WoSA9ICYAhR12YgBQejsUZHzb8jwh6+FNyGlzgs3uGnESvnYhtiqa+7RZFg0Kh8I0gsLtoR7D9u5FYIhBg5lhnjGO+zHdvpddti7H/pgc9lDnYBiSDhVNGm1LQX6GXCnQXQL8xQ55WNyNJIyZLM6U=
