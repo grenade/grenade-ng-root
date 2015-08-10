@@ -7,7 +7,7 @@
 <div ng-hide="show.jumbotron" ng-click="show.jumbotron=!show.jumbotron" class="clearfix  text-center">
   <img src="images/gitninja360.png" alt="I'm GitNinja" style="width: 36px; height: 36px;" />
 </div>
-<div class="row marketing text-center">
+<div class="row text-center">
   <p>
     I'm Rob.
   </p>
@@ -39,6 +39,18 @@
       <a href="https://mozillians.org/u/grenade">
         <img ng-src="images/mozilla.png" />
       </a>
+    </li>
+  </ul>
+  <p style="margin-top: 20px;">Some stuff I've been working on:</p>
+  <ul class="list-unstyled">
+    <li ng-repeat="gist in things">
+      <hr />
+      <strong>{{gist.created_at | date : format : shortDate}}</strong>
+      <br />
+      <a href="{{gist.html_url}}">
+        <em>{{gist.description}}</em>
+      </a>
+      <span class="badge" ng-show="gist.comments">{{gist.comments}}</span>
     </li>
   </ul>
 </div>

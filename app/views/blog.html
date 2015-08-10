@@ -1,0 +1,14 @@
+<ul>
+  <li ng-repeat="gist in gists | filter:gistFilter">
+    <strong>{{gist.created_at | date : format : shortDate}}</strong><br />
+    <a href="{{gist.html_url}}">
+      <em>{{gist.description}}</em>
+    </a>
+    <span class="badge" ng-show="gist.comments">{{gist.comments}}</span>
+    <ul ng-show="false">
+      <li ng-repeat="file in gist.files">
+        <span>{{file.filename}}</span>
+      </li>
+    </ul>
+  </li>
+</ul>
