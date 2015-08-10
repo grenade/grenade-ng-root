@@ -42,15 +42,31 @@
     </li>
   </ul>
   <p style="margin-top: 20px;">Some stuff I've been working on:</p>
-  <ul class="list-unstyled">
-    <li ng-repeat="gist in things">
-      <hr />
-      <strong>{{gist.created_at | date : format : shortDate}}</strong>
-      <br />
-      <a href="{{gist.html_url}}">
-        <em>{{gist.description}}</em>
-      </a>
-      <span class="badge" ng-show="gist.comments">{{gist.comments}}</span>
+</div>
+<div class="row">
+  <ul class="timeline">
+    <li ng-repeat="thing in things" ng-class-odd="'timeline-inverted'" ng-click="go(thing.url)">
+      <div class="timeline-badge">
+        <img src="{{thing.icon}}" />
+      </div>
+      <div class="timeline-panel">
+        <div class="timeline-heading">
+          <h4 class="timeline-title">
+            {{thing.summary | limitTo : 32 }}
+          </h4>
+          <p class="small text-muted">
+            <i class="glyphicon glyphicon-time"></i>
+            <span>{{thing.date | date : format : shortDate}}</span>
+          </p>
+        </div>
+        <div class="timeline-body">
+          <ul>
+            <li ng-repeat="file in thing.files">
+              <span>{{file.filename | limitTo : 32 }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </li>
   </ul>
 </div>
