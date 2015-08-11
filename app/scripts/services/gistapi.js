@@ -29,3 +29,27 @@ angular.module('grenadeNgRootApp')
       }
     );
   });
+
+
+angular.module('grenadeNgRootApp')
+  .factory('GitHubEventsApi', function ($resource) {
+    var eventsUrl = 'https://api.github.com/users/:username/events';
+    return $resource(
+      eventsUrl,
+      {
+        username: '@_username',
+        id: '@_id'
+      },
+      {
+        headers: {
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        get: {
+          url: eventsUrl + '/:id'
+        },
+        query: {
+          isArray: true
+        }
+      }
+    );
+  });

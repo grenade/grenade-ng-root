@@ -52,7 +52,7 @@
       <div class="timeline-panel">
         <div class="timeline-heading">
           <h4 class="timeline-title">
-            {{thing.summary | limitTo : 32 }}
+            {{thing.summary}}
           </h4>
           <p class="small text-muted">
             <i class="glyphicon glyphicon-time"></i>
@@ -60,9 +60,17 @@
           </p>
         </div>
         <div class="timeline-body">
-          <ul>
+          <p ng-show="thing.description">
+            {{thing.description}}
+          </p>
+          <ul ng-show="thing.commits">
+            <li ng-repeat="commit in thing.commits">
+              <span>{{commit.message}}</span>
+            </li>
+          </ul>
+          <ul ng-show="thing.files">
             <li ng-repeat="file in thing.files">
-              <span>{{file.filename | limitTo : 32 }}</span>
+              <span>{{file.filename}}</span>
             </li>
           </ul>
         </div>
