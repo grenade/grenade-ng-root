@@ -41,40 +41,47 @@
       </a>
     </li>
   </ul>
-  <p style="margin-top: 20px;">Some stuff I've been working on:</p>
 </div>
 <div class="row">
-  <ul class="timeline">
-    <li ng-repeat="thing in things" ng-class-odd="'timeline-inverted'" ng-click="go(thing.url)">
-      <div class="timeline-badge">
-        <img src="{{thing.icon}}" />
-      </div>
-      <div class="timeline-panel">
-        <div class="timeline-heading">
-          <h4 class="timeline-title">
-            {{thing.summary}}
-          </h4>
-          <p class="small text-muted">
-            <i class="glyphicon glyphicon-time"></i>
-            <span>{{thing.date | date : format : shortDate}}</span>
-          </p>
+  <hr />
+  <div class="col-md-9">
+    <p style="margin-top: 20px;" class="text-center">Some stuff I've been working on:</p>
+    <ul class="timeline">
+      <li ng-repeat="thing in things" ng-class-odd="'timeline-inverted'" ng-click="go(thing.url)">
+        <div class="timeline-badge">
+          <img src="{{thing.icon}}" />
         </div>
-        <div class="timeline-body">
-          <p ng-show="thing.description">
-            {{thing.description}}
-          </p>
-          <ul ng-show="thing.commits">
-            <li ng-repeat="commit in thing.commits">
-              <span>{{commit.message}}</span>
-            </li>
-          </ul>
-          <ul ng-show="thing.files">
-            <li ng-repeat="file in thing.files">
-              <span>{{file.filename}}</span>
-            </li>
-          </ul>
+        <div class="timeline-panel">
+          <div class="timeline-heading">
+            <h4 class="timeline-title">
+              {{thing.summary}}
+            </h4>
+            <p class="small text-muted">
+              <i class="glyphicon glyphicon-time"></i>
+              <span>{{thing.date | date : format : shortDate}}</span>
+            </p>
+          </div>
+          <div class="timeline-body">
+            <p ng-show="thing.description">
+              {{thing.description}}
+            </p>
+            <ul ng-show="thing.commits">
+              <li ng-repeat="commit in thing.commits">
+                <span>{{commit.message}}</span>
+              </li>
+            </ul>
+            <ul ng-show="thing.files">
+              <li ng-repeat="file in thing.files">
+                <span>{{file.filename}}</span>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-3">
+    <a class="twitter-timeline" href="https://twitter.com/grenade" data-widget-id="631044555765190656">Tweets by @grenade</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </div>
 </div>
