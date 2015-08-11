@@ -9,8 +9,32 @@
  */
 angular.module('grenadeNgRootApp')
   .controller('MainCtrl', function ($scope, $window, GistApi, BugzillaApi) {
-    $scope.go = function(url){
+    var imageBase = 'https://raw.githubusercontent.com/grenade/grenade-ng-root/master/app/images/';
+    $scope.go = function(url) {
       $window.location.href = url;
+    };
+    var needleInHaystack = function(needle, haystack) {
+        for (var straw in haystack) {
+          if (haystack.hasOwnProperty(straw) && haystack[straw].language === needle) {
+            return true;
+          }
+        }
+        return false;
+    }
+    var getIcon = function(files) {
+      if (needleInHaystack('PowerShell', files)) {
+        return imageBase + 'icon-powershell.png';
+      }
+      if (needleInHaystack('Python', files)) {
+        return imageBase + 'icon-python.png';
+      }
+      if (needleInHaystack('Shell', files)) {
+        return imageBase + 'icon-bash.png';
+      }
+      if (needleInHaystack('Markdown', files)) {
+        return imageBase + 'icon-markdown.png';
+      }
+      return imageBase + 'icon-gist.png';
     };
     $scope.things = [];
     GistApi.query({username: 'grenade'}, function(gists){
@@ -22,7 +46,7 @@ angular.module('grenadeNgRootApp')
             comments: gists[i].comments,
             files: gists[i].files,
             url: gists[i].html_url,
-            icon: 'images/github-icon.png'
+            icon: getIcon(gists[i].files)
           });
           $scope.things.sort(function(a, b) {
             a = new Date(a.date);
@@ -39,7 +63,7 @@ angular.module('grenadeNgRootApp')
           summary: data.bugs[i].summary,
           //comments: data.bugs[i].comments,
           url: 'https://bugzilla.mozilla.org/show_bug.cgi?id=' + data.bugs[i].id,
-          icon: 'images/BugZilla_Mascot.png'
+          icon: imageBase + 'icon-bugzilla.png'
         });
         $scope.things.sort(function(a, b) {
           a = new Date(a.date);
