@@ -96,6 +96,14 @@ angular.module('grenadeNgRootApp')
               icon: imageBase + 'icon-commit.png'
             });
             break;
+          case 'ForkEvent':
+            $scope.things.push({
+              date: events[i].created_at,
+              summary: 'Forked: ' + events[i].repo.name + ', to: ' + events[i].payload.forkee.full_name,
+              url: 'https://github.com/' + events[i].payload.forkee.full_name,
+              icon: imageBase + 'icon-fork.png'
+            });
+            break;
           default:
         }
         $scope.things.sort(function(a, b) {
@@ -104,6 +112,7 @@ angular.module('grenadeNgRootApp')
           return a>b ? -1 : a<b ? 1 : 0;
         });
       }
+      $scope.ghdata = events;
     });
     BugzillaApi.query({assigned_to: 'rthijssen'}, function (data) {
       for (var i in data.bugs) {
@@ -120,6 +129,6 @@ angular.module('grenadeNgRootApp')
           return a>b ? -1 : a<b ? 1 : 0;
         });
       }
-      $scope.data = data;
+      $scope.bzdata = data;
     });
   });
