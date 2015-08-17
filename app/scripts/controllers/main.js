@@ -92,7 +92,7 @@ angular.module('grenadeNgRootApp')
               date: events[i].created_at,
               summary: 'Pushed to: ' + events[i].repo.name + '/' + events[i].payload.ref,
               commits: events[i].payload.commits,
-              url: 'https://github.com/' + events[i].repo.name + '/commit/' + events[i].payload.commits[0].sha,
+              url: 'https://github.com/' + events[i].repo.name + '/commit/' + events[i].payload.commits[0].sha.substring(0, 7),
               icon: imageBase + 'icon-commit.png'
             });
             break;
