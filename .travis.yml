@@ -9,7 +9,13 @@ before_script:
 - bower install
 script:
 - grunt build
-- bash ./publish.sh
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: ./publish.sh
+  on:
+    branch: master
+    condition: "$TRAVIS_PULL_REQUEST = false"
 env:
   global:
   - GIT_NAME: Travis-CI
