@@ -206,23 +206,22 @@ angular.module('grenadeNgRootApp')
       }
     });
     */
-    var moz_org_repos = [
+    [
       {org: 'build', repo: 'buildbot'},
       {org: 'build', repo: 'buildbot-configs'},
       {org: 'build', repo: 'puppet'},
-      {org: 'build', repo: 'slave_health'},
-    ];
-    for (var r in moz_org_repos) {
-      MozHgOrgApi.get({org: moz_org_repos[r].org, repo: moz_org_repos[r].repo, email: 'rthijssen@mozilla.com'}, function (data) {
+      {org: 'build', repo: 'slave_health'}
+    ].map(function(mozhg){
+      MozHgOrgApi.get({org: mozhg.org, repo: mozhg.repo, email: 'rthijssen@mozilla.com'}, function (data) {
         for (var i in data) {
           if (data.hasOwnProperty(i) && i.length <= 6) {
             var dt = new Date(0);
             dt.setUTCSeconds(data[i].date);
             $scope.things.push({
               date: dt.toISOString(),
-              summary: 'Pushed to: hg.m.o/' + moz_org_repos[r].org + '/' + moz_org_repos[r].repo + ' (' + data[i].changesets.map(function(changeset) { return changeset.branch; }).join(', ') + ')',
+              summary: 'Pushed to: hg.m.o/' + mozhg.org + '/' + mozhg.repo + ' (' + data[i].changesets.map(function(changeset) { return changeset.branch; }).join(', ') + ')',
               changesets: data[i].changesets,
-              url: 'https://hg.mozilla.org/' + moz_org_repos[r].org + '/' + moz_org_repos[r].repo + '/pushloghtml?changeset=' + data[i].changesets[0].node.substring(0, 12),
+              url: 'https://hg.mozilla.org/' + mozhg.org + '/' + mozhg.repo + '/pushloghtml?changeset=' + data[i].changesets[0].node.substring(0, 12),
               icon: imageBase + 'icon-push-mozilla.png'
             });
           }
@@ -233,5 +232,5 @@ angular.module('grenadeNgRootApp')
           return a>b ? -1 : a<b ? 1 : 0;
         });
       });
-    }
+    });
   });
