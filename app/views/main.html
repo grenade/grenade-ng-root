@@ -54,7 +54,7 @@
     <ul class="timeline">
       <li ng-repeat="thing in things" ng-class-odd="'timeline-inverted'" ng-click="go(thing.url)">
         <div class="timeline-badge">
-          <img src="{{thing.icon}}" />
+          <img ng-src="{{thing.icon}}" />
         </div>
         <div class="timeline-panel">
           <div class="timeline-heading">
@@ -78,6 +78,11 @@
             <ul ng-show="thing.files">
               <li ng-repeat="file in thing.files">
                 <span>{{file.filename}}</span>
+              </li>
+            </ul>
+            <ul ng-show="thing.tags" class="list-inline">
+              <li ng-repeat="tag in thing.tags">
+                <span class="badge">{{tag}}</span>
               </li>
             </ul>
           </div>

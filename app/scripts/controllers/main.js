@@ -8,7 +8,7 @@
  * Controller of the grenadeNgRootApp
  */
 angular.module('grenadeNgRootApp')
-  .controller('MainCtrl', function ($scope, $window, $location, GistApi, GitHubEventsApi, BugzillaApi) {
+  .controller('MainCtrl', function ($scope, $window, $location, GistApi, GitHubEventsApi, BugzillaApi, SoUserApi, SoQuestionApi) {
     var imageBase = 'https://raw.githubusercontent.com/grenade/grenade-ng-root/master/app/images/';
     if ($location.host() === 'localhost') {
       imageBase = 'images/';
@@ -40,6 +40,44 @@ angular.module('grenadeNgRootApp')
       return imageBase + 'icon-gist.png';
     };
     $scope.things = [];
+    BugzillaApi.query({assigned_to: 'rthijssen'}, function (data) {
+      for (var i in data.bugs) {
+        if ($scope.things.filter(function(e) { return e.summary === data.bugs[i].summary}).length < 1) {
+          $scope.things.push({
+            date: data.bugs[i].last_change_time,
+            summary: data.bugs[i].summary,
+            //comments: data.bugs[i].comments,
+            url: 'https://bugzilla.mozilla.org/show_bug.cgi?id=' + data.bugs[i].id,
+            icon: imageBase + 'icon-bugzilla.png'
+          });
+        }
+      }
+      $scope.things.sort(function (a, b) {
+        a = new Date(a.date);
+        b = new Date(b.date);
+        return a>b ? -1 : a<b ? 1 : 0;
+      });
+      $scope.bzdata = data;
+    });
+    BugzillaApi.query({reporter: 'rthijssen'}, function (data) {
+      for (var i in data.bugs) {
+        if ($scope.things.filter(function(e) { return e.summary === data.bugs[i].summary}).length < 1) {
+          $scope.things.push({
+            date: data.bugs[i].last_change_time,
+            summary: data.bugs[i].summary,
+            //comments: data.bugs[i].comments,
+            url: 'https://bugzilla.mozilla.org/show_bug.cgi?id=' + data.bugs[i].id,
+            icon: imageBase + 'icon-bugzilla.png'
+          });
+        }
+      }
+      $scope.things.sort(function (a, b) {
+        a = new Date(a.date);
+        b = new Date(b.date);
+        return a>b ? -1 : a<b ? 1 : 0;
+      });
+      $scope.bzdata = data;
+    });
     GistApi.query({username: 'grenade'}, function (gists) {
       for (var i in gists) {
         if (!!(gists[i].description)) {
@@ -51,13 +89,13 @@ angular.module('grenadeNgRootApp')
             url: gists[i].html_url,
             icon: getIcon(gists[i].files)
           });
-          $scope.things.sort(function(a, b) {
-            a = new Date(a.date);
-            b = new Date(b.date);
-            return a>b ? -1 : a<b ? 1 : 0;
-          });
         }
       }
+      $scope.things.sort(function(a, b) {
+        a = new Date(a.date);
+        b = new Date(b.date);
+        return a>b ? -1 : a<b ? 1 : 0;
+      });
     });
     GitHubEventsApi.query({username: 'grenade'}, function (events) {
       for (var i in events) {
@@ -106,29 +144,65 @@ angular.module('grenadeNgRootApp')
             break;
           default:
         }
-        $scope.things.sort(function(a, b) {
-          a = new Date(a.date);
-          b = new Date(b.date);
-          return a>b ? -1 : a<b ? 1 : 0;
-        });
       }
+      $scope.things.sort(function(a, b) {
+        a = new Date(a.date);
+        b = new Date(b.date);
+        return a>b ? -1 : a<b ? 1 : 0;
+      });
       $scope.ghdata = events;
     });
-    BugzillaApi.query({assigned_to: 'rthijssen'}, function (data) {
-      for (var i in data.bugs) {
+    SoUserApi.query({userid: '68115', interaction: 'questions'}, function (data) {
+      for (var i in data.items) {
+        var dt = new Date(0);
+        if (data.items[i].last_edit_date) {
+          dt.setUTCSeconds(data.items[i].last_edit_date);
+        } else {
+          dt.setUTCSeconds(data.items[i].creation_date);
+        }
         $scope.things.push({
-          date: data.bugs[i].last_change_time,
-          summary: data.bugs[i].summary,
-          //comments: data.bugs[i].comments,
-          url: 'https://bugzilla.mozilla.org/show_bug.cgi?id=' + data.bugs[i].id,
-          icon: imageBase + 'icon-bugzilla.png'
-        });
-        $scope.things.sort(function (a, b) {
-          a = new Date(a.date);
-          b = new Date(b.date);
-          return a>b ? -1 : a<b ? 1 : 0;
+          date: dt.toISOString(),
+          summary: data.items[i].title,
+          url: data.items[i].link,
+          icon: imageBase + 'icon-so.png',
+          tags: data.items[i].tags
         });
       }
-      $scope.bzdata = data;
+      $scope.things.sort(function (a, b) {
+        a = new Date(a.date);
+        b = new Date(b.date);
+        return a>b ? -1 : a<b ? 1 : 0;
+      });
+    });
+
+    SoUserApi.query({userid: '68115', interaction: 'answers'}, function (data) {
+      var tracker = {};
+      for (var i in data.items) {
+        var qid = data.items[i].question_id;
+        tracker[qid].answerId = data.items[i].answer_id;
+        if (data.items[i].last_edit_date) {
+          tracker[qid].utcSeconds = data.items[i].last_edit_date;
+        } else {
+          tracker[qid].utcSeconds = data.items[i].creation_date;
+        }
+        SoQuestionApi.query({questionid: qid}, function (qdata) {
+          for (var qi in qdata.items) {
+            var dt = new Date(0);
+            dt.setUTCSeconds(tracker[qdata.items[qi].question_id].utcSeconds);
+            $scope.things.push({
+              date: dt.toISOString(),
+              summary: qdata.items[qi].title,
+              url: 'http://stackoverflow.com/questions/' + qdata.items[qi].question_id + '/' + tracker[qdata.items[qi].question_id].answerId,
+              icon: imageBase + 'icon-so.png',
+              tags: qdata.items[qi].tags
+            });
+            $scope.things.sort(function (a, b) {
+              a = new Date(a.date);
+              b = new Date(b.date);
+              return a>b ? -1 : a<b ? 1 : 0;
+            });
+          }
+        });
+      }
     });
   });
