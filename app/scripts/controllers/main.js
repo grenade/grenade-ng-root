@@ -8,7 +8,7 @@
  * Controller of the grenadeNgRootApp
  */
 angular.module('grenadeNgRootApp')
-  .controller('MainCtrl', function ($scope, $window, $location, GistApi, GitHubEventsApi, BugzillaApi, SoUserApi, SoQuestionApi) {
+  .controller('MainCtrl', function ($scope, $window, $location, GistApi, GitHubEventsApi, BugzillaApi, SoUserApi, SoQuestionApi, MozHgOrgApi) {
     var imageBase = 'https://raw.githubusercontent.com/grenade/grenade-ng-root/master/app/images/';
     if ($location.host() === 'localhost') {
       imageBase = 'images/';
@@ -131,7 +131,7 @@ angular.module('grenadeNgRootApp')
               summary: 'Pushed to: ' + events[i].repo.name + '/' + events[i].payload.ref,
               commits: events[i].payload.commits,
               url: 'https://github.com/' + events[i].repo.name + '/commit/' + events[i].payload.commits[0].sha.substring(0, 7),
-              icon: imageBase + 'icon-commit.png'
+              icon: imageBase + 'icon-push-github.png'
             });
             break;
           case 'ForkEvent':
@@ -174,7 +174,7 @@ angular.module('grenadeNgRootApp')
         return a>b ? -1 : a<b ? 1 : 0;
       });
     });
-
+    /*
     SoUserApi.query({userid: '68115', interaction: 'answers'}, function (data) {
       var tracker = {};
       for (var i in data.items) {
@@ -205,4 +205,33 @@ angular.module('grenadeNgRootApp')
         });
       }
     });
+    */
+    var moz_org_repos = [
+      {org: 'build', repo: 'buildbot'},
+      {org: 'build', repo: 'buildbot-configs'},
+      {org: 'build', repo: 'puppet'},
+      {org: 'build', repo: 'slave_health'},
+    ];
+    for (var r in moz_org_repos) {
+      MozHgOrgApi.get({org: moz_org_repos[r].org, repo: moz_org_repos[r].repo, email: 'rthijssen@mozilla.com'}, function (data) {
+        for (var i in data) {
+          if (data.hasOwnProperty(i) && i.length <= 6) {
+            var dt = new Date(0);
+            dt.setUTCSeconds(data[i].date);
+            $scope.things.push({
+              date: dt.toISOString(),
+              summary: 'Pushed to: hg.m.o/' + moz_org_repos[r].org + '/' + moz_org_repos[r].repo + ' (' + data[i].changesets.map(function(changeset) { return changeset.branch; }).join(', ') + ')',
+              changesets: data[i].changesets,
+              url: 'https://hg.mozilla.org/' + moz_org_repos[r].org + '/' + moz_org_repos[r].repo + '/pushloghtml?changeset=' + data[i].changesets[0].node.substring(0, 12),
+              icon: imageBase + 'icon-push-mozilla.png'
+            });
+          }
+        }
+        $scope.things.sort(function (a, b) {
+          a = new Date(a.date);
+          b = new Date(b.date);
+          return a>b ? -1 : a<b ? 1 : 0;
+        });
+      });
+    }
   });

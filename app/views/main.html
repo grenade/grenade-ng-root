@@ -75,6 +75,16 @@
                 <span>{{commit.message}}</span>
               </li>
             </ul>
+            <ul ng-show="thing.changesets">
+              <li ng-repeat="changeset in thing.changesets">
+                <span>{{changeset.desc}}</span>
+                <ul>
+                  <li ng-repeat="file in changeset.files">
+                    <span>{{file}}</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
             <ul ng-show="thing.files">
               <li ng-repeat="file in thing.files">
                 <span>{{file.filename}}</span>
