@@ -210,7 +210,8 @@ angular.module('grenadeNgRootApp')
       {org: 'build', repo: 'buildbot'},
       {org: 'build', repo: 'buildbot-configs'},
       {org: 'build', repo: 'puppet'},
-      {org: 'build', repo: 'slave_health'}
+      {org: 'build', repo: 'slave_health'},
+      {org: 'build', repo: 'tools'}
     ].map(function(mozhg){
       MozHgOrgApi.get({org: mozhg.org, repo: mozhg.repo, email: 'rthijssen@mozilla.com'}, function (data) {
         for (var i in data) {
