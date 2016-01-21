@@ -52,7 +52,7 @@
   <div class="col-md-9">
     <p style="margin-top: 20px;" class="text-center">Some stuff I've been working on:</p>
     <ul class="timeline">
-      <li ng-repeat="thing in things" ng-class-odd="'timeline-inverted'" ng-click="go(thing.url)">
+      <li ng-repeat="thing in things" ng-class-odd="'timeline-inverted'" ng-click="go(thing.url)" ng-show="thing.summary.indexOf('yoga') < 0">
         <div class="timeline-badge">
           <img ng-src="{{thing.icon}}" />
         </div>
