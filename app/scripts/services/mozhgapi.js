@@ -28,4 +28,14 @@ angular.module('grenadeNgRootApp')
         email: '@_email'
       }
     );
+  })
+  .factory('RbMozHgApi', function ($resource) {
+    var url = 'https://reviewboard-hg.mozilla.org/:repo/json-pushes?full=1&user=:email';
+    return $resource(
+      url,
+      {
+        repo: '@_repo',
+        email: '@_email'
+      }
+    );
   });

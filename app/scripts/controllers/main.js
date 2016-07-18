@@ -8,7 +8,7 @@
  * Controller of the grenadeNgRootApp
  */
 angular.module('grenadeNgRootApp')
-  .controller('MainCtrl', function ($scope, $window, $location, GistApi, GitHubEventsApi, BugzillaApi, SoUserApi, SoQuestionApi, MozHgApi, MozHgOrgApi) {
+  .controller('MainCtrl', function ($scope, $window, $location, GistApi, GitHubEventsApi, BugzillaApi, SoUserApi, SoQuestionApi, MozHgApi, MozHgOrgApi, RbMozHgApi) {
     var imageBase = 'https://raw.githubusercontent.com/grenade/grenade-ng-root/master/app/images/';
     if ($location.host() === 'localhost') {
       imageBase = 'images/';
@@ -250,6 +250,30 @@ angular.module('grenadeNgRootApp')
               changesets: data[i].changesets,
               url: 'https://hg.mozilla.org/' + mozrepo + '/pushloghtml?changeset=' + data[i].changesets[0].node.substring(0, 12),
               icon: imageBase + 'icon-push-mozilla.png'
+            });
+          }
+        }
+        $scope.things.sort(function (a, b) {
+          a = new Date(a.date);
+          b = new Date(b.date);
+          return a>b ? -1 : a<b ? 1 : 0;
+        });
+      });
+    });
+    [
+      'gecko'
+    ].map(function(mozrepo){
+      RbMozHgApi.get({ repo: mozrepo, email: 'rthijssen@mozilla.com'}, function (data) {
+        for (var i in data) {
+          if (data.hasOwnProperty(i) && i.length <= 6) {
+            var dt = new Date(0);
+            dt.setUTCSeconds(data[i].date);
+            $scope.things.push({
+              date: dt.toISOString(),
+              summary: 'Pushed to: rb-hg.m.o/' + mozrepo + ' (' + data[i].changesets.map(function(changeset) { return changeset.branch; }).join(', ') + ')',
+              changesets: data[i].changesets,
+              url: 'https://reviewboard-hg.mozilla.org/' + mozrepo + '/pushloghtml?changeset=' + data[i].changesets[0].node.substring(0, 12),
+              icon: imageBase + 'icon-push-review-mozilla.png'
             });
           }
         }
