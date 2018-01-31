@@ -17,7 +17,7 @@ angular.module('grenadeNgRootApp')
         'borderless',
         'crypto',
         'snapr'
-      ].every(s => summary.indexOf(v) < 0);
+      ].every(function(v) { return (summary.indexOf(v) < 0); });
     };
     var imageBase = 'https://raw.githubusercontent.com/grenade/grenade-ng-root/master/app/images/';
     if ($location.host() === 'localhost') {
