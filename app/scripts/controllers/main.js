@@ -16,7 +16,9 @@ angular.module('grenadeNgRootApp')
         'bansko',
         'borderless',
         'crypto',
-        'snapr'
+        'snapr',
+        'grenade-ng',
+        'grenade.github.io'
       ].every(function(v) { return (summary.indexOf(v) < 0); });
     };
     var imageBase = 'https://raw.githubusercontent.com/grenade/grenade-ng-root/master/app/images/';
