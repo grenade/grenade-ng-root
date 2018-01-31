@@ -1,10 +1,12 @@
 sudo: false
 language: node_js
+node_js:
+  - "node"
 before_install:
+- npm install -g npm bower grunt-cli
 - rvm install 2.0.0
 - gem install sass compass
 before_script:
-- npm install -g bower grunt-cli
 - bower install
 script:
 - grunt build
