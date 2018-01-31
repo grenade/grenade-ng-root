@@ -15,7 +15,8 @@ angular.module('grenadeNgRootApp')
         'steel',
         'bansko',
         'borderless',
-        'crypto'
+        'crypto',
+        'snapr'
       ].every(function(v){
         return (summary.indexOf(v) < 0);
       });
