@@ -10,16 +10,14 @@
 angular.module('grenadeNgRootApp')
   .controller('MainCtrl', function ($scope, $window, $location, GistApi, GitHubEventsApi, BugzillaApi, SoUserApi, SoQuestionApi, MozHgApi, MozHgOrgApi, RbMozHgApi) {
     $scope.showThing = function(summary) {
-      [
+      return [
         'yoga',
         'steel',
         'bansko',
         'borderless',
         'crypto',
         'snapr'
-      ].every(function(v){
-        return (summary.indexOf(v) < 0);
-      });
+      ].every(s => summary.indexOf(v) < 0);
     };
     var imageBase = 'https://raw.githubusercontent.com/grenade/grenade-ng-root/master/app/images/';
     if ($location.host() === 'localhost') {
