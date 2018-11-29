@@ -15,6 +15,7 @@ angular.module('grenadeNgRootApp')
         'steel',
         'bansko',
         'snowpearl',
+        'thracecraft',
         'borderless',
         'crypto',
         'snapr',
