@@ -11,16 +11,17 @@ angular.module('grenadeNgRootApp')
   .controller('MainCtrl', function ($scope, $window, $location, GistApi, GitHubEventsApi, BugzillaApi, SoUserApi, SoQuestionApi, MozHgApi, MozHgOrgApi, RbMozHgApi) {
     $scope.showThing = function(summary) {
       return [
-        'yoga',
-        'steel',
         'bansko',
-        'snowpearl',
-        'thracecraft',
         'borderless',
         'crypto',
-        'snapr',
+        'eurovector',
         'grenade-ng',
-        'grenade.github.io'
+        'grenade.github.io',
+        'snapr',
+        'snowpearl',
+        'steel',
+        'thracecraft',
+        'yoga'
       ].every(function(v) { return (summary.indexOf(v) < 0); });
     };
     var imageBase = 'https://raw.githubusercontent.com/grenade/grenade-ng-root/master/app/images/';
