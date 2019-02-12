@@ -4,7 +4,8 @@ node_js:
   - "node"
 before_install:
 - npm install -g npm bower grunt-cli
-- rvm install 2.0.0
+- rvm install 2.2
+- gem install rb-inotify -v 0.9.10
 - gem install sass compass
 before_script:
 - npm install
