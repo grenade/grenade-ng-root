@@ -14,6 +14,7 @@ angular.module('grenadeNgRootApp')
         'bansko',
         'borderless',
         'crypto',
+        'cv',
         'eurovector',
         'grenade-ng',
         'grenade.github.io',
