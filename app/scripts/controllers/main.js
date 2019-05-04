@@ -12,6 +12,7 @@ angular.module('grenadeNgRootApp')
     $scope.showThing = function(summary) {
       return [
         'bansko',
+        'bears',
         'borderless',
         'crypto',
         'cv',
