@@ -18,6 +18,7 @@ angular.module('grenadeNgRootApp')
         'cv',
         'eurovector',
         'grenade-ng',
+        'grenade-react',
         'grenade.github.io',
         'snapr',
         'snowpearl',
