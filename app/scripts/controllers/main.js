@@ -24,7 +24,8 @@ angular.module('grenadeNgRootApp')
         'snowpearl',
         'steel',
         'thracecraft',
-        'yoga'
+        'yoga',
+        'rubberneck/refs/heads/observe'
       ].every(function(v) { return (summary.indexOf(v) < 0); });
     };
     var imageBase = 'https://raw.githubusercontent.com/grenade/grenade-ng-root/master/app/images/';
