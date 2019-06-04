@@ -3,7 +3,6 @@
 git clone "https://${GH_TOKEN}@${GH_REF}" $TRAVIS_BUILD_DIR/pages_repo
 rm -rf $TRAVIS_BUILD_DIR/pages_repo/*
 git --git-dir=./pages_repo/.git --work-tree=./pages_repo checkout bugzoolla
-git --git-dir=./pages_repo/.git --work-tree=./pages_repo checkout cv
 git --git-dir=./pages_repo/.git --work-tree=./pages_repo checkout keybase.txt
 cp -r $TRAVIS_BUILD_DIR/dist/* $TRAVIS_BUILD_DIR/pages_repo/
 if [[ -n "$GH_PAGES_CNAME" ]]; then
