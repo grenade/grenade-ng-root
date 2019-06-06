@@ -20,6 +20,7 @@ angular.module('grenadeNgRootApp')
         'grenade-ng',
         'grenade-react',
         'grenade.github.io',
+        'memento',
         'snapr',
         'snowpearl',
         'steel',
