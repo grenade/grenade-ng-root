@@ -25,6 +25,7 @@ angular.module('grenadeNgRootApp')
         'snowpearl',
         'steel',
         'thracecraft',
+        'transmogrify',
         'yoga',
         'rubberneck/refs/heads/observe'
       ].every(function(v) { return (summary.indexOf(v) < 0); });
